@@ -1,14 +1,14 @@
 package com.stackoverflow.service;
 
-import com.stackoverflow.dao.CommentDao;
+import com.stackoverflow.repository.CommentRepository;
 import com.stackoverflow.model.Comment;
 
 import java.util.List;
 
-public class CommentServiceImple implements CommentService{
+public class CommentServiceImpl implements CommentService{
 
-    private final CommentDao commentDao;
-    CommentServiceImple(CommentDao commentDao){
+    private final CommentRepository commentDao;
+    CommentServiceImpl(CommentRepository commentDao){
         this.commentDao=commentDao;
     }
 

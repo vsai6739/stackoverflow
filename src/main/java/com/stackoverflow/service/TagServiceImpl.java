@@ -1,14 +1,14 @@
 package com.stackoverflow.service;
 
-import com.stackoverflow.dao.TagDao;
+import com.stackoverflow.repository.TagRepository;
 import com.stackoverflow.model.Tag;
 
 import java.util.List;
 
-public class TagServiceImple implements TagService{
-    private final TagDao tagDao;
+public class TagServiceImpl implements TagService{
+    private final TagRepository tagDao;
 
-    TagServiceImple(TagDao tagDao){
+    TagServiceImpl(TagRepository tagDao){
         this.tagDao=tagDao;
     }
 
