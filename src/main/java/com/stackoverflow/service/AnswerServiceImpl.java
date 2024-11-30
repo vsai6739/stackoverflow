@@ -1,14 +1,14 @@
 package com.stackoverflow.service;
 
-import com.stackoverflow.dao.AnswerDao;
+import com.stackoverflow.repository.AnswerRepository;
 import com.stackoverflow.model.Answer;
 
 import java.util.List;
 
-public class AnswerServiceImple implements AnswerService{
+public class AnswerServiceImpl implements AnswerService{
 
-    private final AnswerDao answerDao;
-    AnswerServiceImple(AnswerDao answerDao){
+    private final AnswerRepository answerDao;
+    AnswerServiceImpl(AnswerRepository answerDao){
         this.answerDao=answerDao;
     }
     @Override
