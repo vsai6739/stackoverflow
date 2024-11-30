@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+</head>
+<body>
+<h1>Welcome, <span th:text="${user.username}"></span></h1>
+<p>Email: <span th:text="${user.email}"></span></p>
+<p>Bio: <span th:text="${user.profile.bio}"></span></p>
+<a th:href="@{/users/{userId}/profile/edit(userId=${user.id})}">Edit Profile</a>
+</body>
+</html>
