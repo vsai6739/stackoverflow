@@ -84,4 +84,22 @@ public class UserServiceImpl implements UserService{
         Optional<User> optionalUser = userRepository.findById(userId);
         userRepository.deleteById(userId);
     }
+
+    public User login(String email, String password) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email is required.");
+        }
+        if (password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Password is required.");
+        }
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("No user found with the provided email."));
+
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid password.");
+        }
+
+        return user;
+    }
 }
