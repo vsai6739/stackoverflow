@@ -93,6 +93,14 @@
         <a th:href="@{/users/login}" class="btn">Back to Home</a>
     </div>
 
+    <div class="actions">
+        <br>
+        <a th:href="@{/users/{userId}/questions(userId=${user.id})}" class="btn">View Questions</a>
+        <a th:href="@{/users/{userId}/answers(userId=${user.id})}" class="btn">View Answers</a>
+        <a th:href="@{/users/{userId}/comments(userId=${user.id})}" class="btn">View Comments</a>
+
+    </div>
+
 </div>
 </body>
 </html>

@@ -1,9 +1,6 @@
 package com.stackoverflow.service;
 
-import com.stackoverflow.model.Answer;
-import com.stackoverflow.model.Notification;
-import com.stackoverflow.model.Question;
-import com.stackoverflow.model.User;
+import com.stackoverflow.model.*;
 
 import java.util.List;
 
@@ -12,10 +9,12 @@ public interface UserService {
     User authenticateUser(String email, String password);
     User getUserById(Long userId);
     User getUserByUsername(String username);
+    User getUserByEmail(String email);
     User updateUserProfile(Long userId, String bio);
     List<Question> getQuestionsByUser(Long userId);
     List<Answer> getAnswersByUser(Long userId);
     List<Notification> getNotificationsByUser(Long userId);
+    List<Comment> getCommentsByUser(Long userId);
     void deleteUser(Long userId);
     User login(String email, String password);
 }

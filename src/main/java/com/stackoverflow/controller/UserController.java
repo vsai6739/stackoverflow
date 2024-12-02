@@ -1,12 +1,10 @@
 package com.stackoverflow.controller;
 
 import com.stackoverflow.dto.UserLoginRequest;
-import com.stackoverflow.model.Answer;
-import com.stackoverflow.model.Notification;
-import com.stackoverflow.model.Question;
-import com.stackoverflow.model.User;
+import com.stackoverflow.model.*;
 import com.stackoverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,28 +23,36 @@ public class UserController {
     }
 
     @GetMapping("/register")
+    @PreAuthorize("permitAll()")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
         return "user/registerationform";
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
-        try {
-            userService.registerUser(user.getUsername(), user.getEmail(), user.getPassword());
-            return "redirect:/users/login";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "user/register";
-        }
+//        try {
+//            System.out.println("Username : " + user.getUsername() + "\t email : " + user.getEmail() + "\t password : " + user.getPassword());
+//            userService.registerUser(user.getUsername(), user.getEmail(), user.getPassword());
+//            return "redirect:/users/login";
+//        } catch (Exception e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "user/register";
+//        }
+        System.out.println("Username : " + user.getUsername() + "\t email : " + user.getEmail() + "\t password : " + user.getPassword());
+        userService.registerUser(user.getUsername(),user.getEmail(),user.getPassword());
+        return "redirect:/users/login";
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("loginRequest", new UserLoginRequest());
         return "user/login";
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("/login")
     public String loginUser(@ModelAttribute("loginRequest") UserLoginRequest request, Model model) {
         try {
@@ -59,6 +65,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/profile/{userId}")
     public String getUserProfile(@PathVariable Long userId, Model model) {
         User user = userService.getUserById(userId);
@@ -66,6 +73,7 @@ public class UserController {
         return "user/profile";
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN') ")
     @GetMapping("/{userId}/profile/edit")
     public String showUpdateProfileForm(@PathVariable Long userId, Model model) {
         User user = userService.getUserById(userId);
@@ -73,26 +81,34 @@ public class UserController {
         return "user/editprofile";
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN') ")
     @PatchMapping("/{userId}/profile/update")
     public String updateUserProfile(@PathVariable Long userId, @ModelAttribute("user") User user) {
         userService.updateUserProfile(userId, user.getProfile().getBio());
         return "redirect:/users/profile/" + userId;
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN') ")
     @GetMapping("/{userId}/questions")
     public String getUserQuestions(@PathVariable Long userId, Model model) {
         List<Question> questions = userService.getQuestionsByUser(userId);
+        User user = userService.getUserById(userId);
         model.addAttribute("questions", questions);
+        model.addAttribute("user",user);
         return "user/questions";
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN') ")
     @GetMapping("/{userId}/answers")
     public String getUserAnswers(@PathVariable Long userId, Model model) {
         List<Answer> answers = userService.getAnswersByUser(userId);
+        User user = userService.getUserById(userId);
+        model.addAttribute("user",user);
         model.addAttribute("answers", answers);
         return "user/answers";
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN') ")
     @GetMapping("/{userId}/notifications")
     public String getUserNotifications(@PathVariable Long userId, Model model) {
         List<Notification> notifications = userService.getNotificationsByUser(userId);
@@ -100,6 +116,17 @@ public class UserController {
         return "user/notifications";
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN') ")
+    @GetMapping("/{userId}/comments")
+    public String getCommentsByUser(@PathVariable Long userId, Model model){
+        List<Comment> comments = userService.getCommentsByUser(userId);
+        User user = userService.getUserById(userId);
+        model.addAttribute("comments",comments);
+        model.addAttribute("user",user);
+        return "user/comments";
+    }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN') ")
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
