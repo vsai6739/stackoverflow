@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        return "user/register";
+        return "user/registerationform";
     }
 
     @PostMapping("/register")
@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("/login")
     public String loginUser(@ModelAttribute("loginRequest") UserLoginRequest request, Model model) {
         try {
-            User user = userService.authenticateUser(request.getEmail(), request.getPassword());
+            User user = userService.login(request.getEmail(), request.getPassword());
             model.addAttribute("user", user);
             return "redirect:/users/profile/" + user.getId();
         } catch (Exception e) {
@@ -70,12 +70,12 @@ public class UserController {
     public String showUpdateProfileForm(@PathVariable Long userId, Model model) {
         User user = userService.getUserById(userId);
         model.addAttribute("user", user);
-        return "user/edit-profile";
+        return "user/editprofile";
     }
 
-    @PostMapping("/{userId}/profile/edit")
-    public String updateUserProfile(@PathVariable Long userId, @RequestParam String bio) {
-        userService.updateUserProfile(userId, bio);
+    @PatchMapping("/{userId}/profile/update")
+    public String updateUserProfile(@PathVariable Long userId, @ModelAttribute("user") User user) {
+        userService.updateUserProfile(userId, user.getProfile().getBio());
         return "redirect:/users/profile/" + userId;
     }
 
@@ -98,5 +98,10 @@ public class UserController {
         List<Notification> notifications = userService.getNotificationsByUser(userId);
         model.addAttribute("notifications", notifications);
         return "user/notifications";
+    }
+
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
     }
 }
