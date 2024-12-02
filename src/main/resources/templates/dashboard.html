@@ -204,7 +204,7 @@
                     <span>0 answers</span>
                 </div>
                 <div class="content">
-                    <a href="#" th:text="${question.title}">hi</a>
+                    <a th:href="@{/question}" th:text="${question.title}">hi</a>
                     <p th:text="${question.description}">hello</p>
                     <div class="tags">
                         <span th:each="tag : ${question.tags}" th:text="${tag.name}"></span>
