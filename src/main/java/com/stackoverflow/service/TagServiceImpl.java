@@ -2,9 +2,11 @@ package com.stackoverflow.service;
 
 import com.stackoverflow.repository.TagRepository;
 import com.stackoverflow.model.Tag;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TagServiceImpl implements TagService{
     private final TagRepository tagDao;
 

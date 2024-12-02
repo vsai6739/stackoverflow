@@ -9,13 +9,12 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 @Entity
-@Table(name = "questions")
+@Table(name = "discussions")
 @NoArgsConstructor
-public class Question {
-
+public class Discussion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,34 +27,27 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
     private User user;
 
     @ManyToMany
     @JoinTable(
-            name = "question_tag",
-            joinColumns = @JoinColumn(name = "question_id"),
+            name = "discussion_tag",
+            joinColumns = @JoinColumn(name = "discussion_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> tags;
+    private List<Tag> discussionTags;
 
     private Integer upvotes = 0;
-    private Integer downvotes = 0;
 
-    @Column(nullable = false)
-    private String status = "open";
+    @OneToMany(mappedBy = "discussion", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Replay> replays;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Answer> answers;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Comment> comments;
 
     public void addTag(Tag tag){
-        if(tags==null){
-            tags=new ArrayList<>();
+        if(discussionTags==null){
+            discussionTags=new ArrayList<>();
         }
-        tags.add(tag);
+        discussionTags.add(tag);
     }
-
 }

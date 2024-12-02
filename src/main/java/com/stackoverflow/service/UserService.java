@@ -16,5 +16,6 @@ public interface UserService {
     List<Notification> getNotificationsByUser(Long userId);
     List<Comment> getCommentsByUser(Long userId);
     void deleteUser(Long userId);
+    void saveUser(User user);
     User login(String email, String password);
 }

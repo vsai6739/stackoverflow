@@ -2,9 +2,11 @@ package com.stackoverflow.service;
 
 import com.stackoverflow.repository.CommentRepository;
 import com.stackoverflow.model.Comment;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentDao;
