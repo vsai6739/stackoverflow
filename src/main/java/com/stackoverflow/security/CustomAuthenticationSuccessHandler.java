@@ -24,14 +24,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        // Get authenticated user's email
+
         String email = authentication.getName();
 
-        // Fetch user ID from the database
         User user = userService.getUserByEmail(email);
         Long userId = user.getId();
 
-        // Redirect to /profile/{userId}
-        response.sendRedirect("/users/profile/" + userId);
+        //response.sendRedirect("/users/profile/" + userId);
+        response.sendRedirect("/users/dashboard");
     }
 }

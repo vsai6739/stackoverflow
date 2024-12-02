@@ -175,7 +175,9 @@
     <div class="header-right">
         <div class="icons">
             <span>🔔<strong>Notifications</strong></span>
+            <a th:href="@{/users/profile/{userId}(userId=${user.id})}" style="text-decoration: none; color: inherit;">
             <span>👤<strong>User</strong></span>
+            </a>
         </div>
     </div>
 </header>

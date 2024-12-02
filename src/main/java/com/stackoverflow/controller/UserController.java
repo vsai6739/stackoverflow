@@ -5,6 +5,8 @@ import com.stackoverflow.model.*;
 import com.stackoverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,16 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/dashboard")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String dashboard(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userService.getUserByEmail(email);
+        model.addAttribute("user", user);
+        return "/dashboard";
+    }
+
     @GetMapping("/register")
     @PreAuthorize("permitAll()")
     public String showRegistrationForm(Model model) {
@@ -32,14 +44,6 @@ public class UserController {
     @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
-//        try {
-//            System.out.println("Username : " + user.getUsername() + "\t email : " + user.getEmail() + "\t password : " + user.getPassword());
-//            userService.registerUser(user.getUsername(), user.getEmail(), user.getPassword());
-//            return "redirect:/users/login";
-//        } catch (Exception e) {
-//            model.addAttribute("error", e.getMessage());
-//            return "user/register";
-//        }
         System.out.println("Username : " + user.getUsername() + "\t email : " + user.getEmail() + "\t password : " + user.getPassword());
         userService.registerUser(user.getUsername(),user.getEmail(),user.getPassword());
         return "redirect:/users/login";
