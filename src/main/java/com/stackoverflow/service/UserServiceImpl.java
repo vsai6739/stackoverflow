@@ -87,7 +87,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void saveUser(User user) {
-        userRepository.save(user);
+        userRepository.save(user);}
+
 
     public User login(String email, String password) {
         if (email == null || email.isEmpty()) {
