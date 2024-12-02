@@ -21,9 +21,4 @@ public class DashboardController {
         model.addAttribute("questions",questionList);
         return "dashboard";
     }
-
-//    @GetMapping("/question")
-//    public String questionPage(Model model){
-//        return "question";
-//    }
 }

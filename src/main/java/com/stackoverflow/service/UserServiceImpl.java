@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
-
     public User login(String email, String password) {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email is required.");
