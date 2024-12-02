@@ -2,9 +2,11 @@ package com.stackoverflow.service;
 
 import com.stackoverflow.repository.AnswerRepository;
 import com.stackoverflow.model.Answer;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AnswerServiceImpl implements AnswerService{
 
     private final AnswerRepository answerDao;
