@@ -17,4 +17,5 @@ public interface UserService {
     List<Answer> getAnswersByUser(Long userId);
     List<Notification> getNotificationsByUser(Long userId);
     void deleteUser(Long userId);
+    void saveUser(User user);
 }

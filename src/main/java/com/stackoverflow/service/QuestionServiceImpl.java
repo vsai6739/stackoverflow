@@ -2,10 +2,12 @@ package com.stackoverflow.service;
 
 import com.stackoverflow.model.Question;
 import com.stackoverflow.repository.QuestionRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class QuestionServiceImpl implements QuestionService{
     private final QuestionRepository questionRepository;
 

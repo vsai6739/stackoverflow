@@ -1,10 +1,12 @@
 package com.stackoverflow.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -26,6 +28,7 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToMany
@@ -47,5 +50,12 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public void addTag(Tag tag){
+        if(tags==null){
+            tags=new ArrayList<>();
+        }
+        tags.add(tag);
+    }
 
 }

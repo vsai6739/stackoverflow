@@ -84,4 +84,9 @@ public class UserServiceImpl implements UserService{
         Optional<User> optionalUser = userRepository.findById(userId);
         userRepository.deleteById(userId);
     }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }
