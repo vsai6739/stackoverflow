@@ -27,4 +27,7 @@ public class Tag {
     @JsonIgnore
     private List<Question> questions;
 
+    @ManyToMany(mappedBy = "discussionTags")
+    @JsonIgnore
+    private List<Discussion> discussions;
 }

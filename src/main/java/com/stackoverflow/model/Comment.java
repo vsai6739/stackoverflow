@@ -31,4 +31,9 @@ public class Comment {
     @JoinColumn(name = "answer_id")
     private Answer answer;
 
+    @ManyToOne
+    @JoinColumn(name = "discussion_id")
+    private Replay replay;
+
+
 }

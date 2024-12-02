@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stack Overflow Dashboard</title>
+    <title>Discussion</title>
     <style>
         /* General styles */
     body {
@@ -79,6 +79,7 @@
     main {
       flex: 1;
       padding: 20px;
+
     }
 
     main .cards {
@@ -111,6 +112,31 @@
       border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
+    /* Style for select dropdowns */
+    main select {
+      background-color: #e1ecf4; /* Light blue background */
+      border: 1px solid #121313; /* Blue border */
+      border-radius: 5px; /* Rounded corners */
+      margin-bottom: 10px;
+      padding: 5px 10px; /* Inner padding */
+      margin-right: 10px; /* Spacing between selects */
+      font-size: 15px; /* Adjust font size */
+      cursor: pointer; /* Pointer cursor on hover */
+      width: 80px;
+      text-align: center;
+    }
+
+
+    /* Style for option elements */
+    main select option {
+      background-color: #fff; /* White background for dropdown options */
+      color: #333; /* Text color */
+      padding: 5px; /* Padding inside each option */
+      font-size: 14px; /* Font size for options */
+    }
+
+
 
     .posts .post {
       display: flex;
@@ -183,52 +209,54 @@
 <div class="container">
     <aside>
         <ul>
-            <li><a th:href="@{/home}">🏠 Home</a></li>
+            <li><a href="#">🏠 Home</a></li>
             <li><a href="#">❓ Questions</a></li>
             <li><a href="#">🏷️ Tags</a></li>
-            <li><a th:href="@{/discussion}">💬 Discussions</a></li>
+            <li><a href="#">💬 Discussions</a></li>
         </ul>
     </aside>
 
     <main>
 
         <div class="text-content">
-            <h1>Welcome to Stack Overflow, [User's Name]!</h1>
-            <p>Find answers to your technical questions and help others answer theirs.</p>
+            <h1>Discussions</h1>
+            <select>
+                <option>sort</option>
+                <option>latest</option>
+                <option>old</option>
+            </select>
+            <select>
+                <option>filter</option>
+            </select>
         </div>
         <section class="posts">
-            <h2>Interesting Questions for you</h2>
-            <div class="post" th:each="question:${questions}">
+            <div class="post" th:each="discussion:${discussions}">
                 <div class="votes">
-                    <span>0 votes</span>
+                    <span th:text="${discussion.upvotes}+' votes'"> votes</span>
                     <span>0 answers</span>
                 </div>
                 <div class="content">
-                    <a href="#" th:text="${question.title}">hi</a>
-                    <p th:text="${question.description}">hello</p>
+                    <a href="#" th:text="${discussion.title}"></a>
+                    <p th:text="${discussion.description}">Attempting RecyclerView paging...</p>
                     <div class="tags">
-                        <span th:each="tag : ${question.tags}" th:text="${tag.name}"></span>
+                        <span th:each="tag:${discussion.discussionTags}" th:text="${tag.name}"></span>
                     </div>
-                    <p class="author" th:text="'Asked by ' + ${question.user.username}"></p>
+                    <p class="author" th:text="'Asked by ' + ${discussion.user.username}"></p>
                 </div>
             </div>
         </section>
     </main>
-
     <aside class="widgets">
-            <button class="main-button">Ask Questions</button>
-        
-        <div class="widget">
-            <h3>The Overflow Blog</h3>
-            <p>Your docs are your infrastructure</p>
-        </div>
-        <div class="widget">
-            <h3>Featured on Meta</h3>
-            <ul>
-                <li>More network sites to see advertising test</li>
-                <li>We're going to the cloud!</li>
-            </ul>
-        </div>
+        <form th:action="@{/create}" method="post">
+        <input type="submit" value="Start Discussion" class="main-button">
+        </form>
+        <h2>Discussions Guidelines</h2>
+        <ul style="list-style-type:circle;">
+            <li>Share perspectives, advice, and insights.</li>
+            <li>Be welcoming and patient.</li>
+            <li>No resume or job listings.</li>
+            <li>Avoid self-promotion.</li>
+        </ul>
     </aside>
 </div>
 
