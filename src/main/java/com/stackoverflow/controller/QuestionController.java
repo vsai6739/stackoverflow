@@ -27,8 +27,6 @@ public class QuestionController {
         this.commentService = commentService;
     }
 
-
-
     @GetMapping("/home")
     public String homePage(Model model){
         List<Question> questionList=questionService.getAllQuestions();
@@ -47,7 +45,8 @@ public class QuestionController {
                                  @RequestParam("tagsList") String tags) {
         System.out.println(questionRequestDTO);
         Question createdQuestion = questionService.createQuestion(questionRequestDTO);
-        return "redirect:/questions/home";
+        //return "redirect:/questions/home";
+        return "redirect:/users/dashboard";
     }
 
     @GetMapping("/{id}")
@@ -57,5 +56,4 @@ public class QuestionController {
         model.addAttribute("question", question);
         return "question/detail";
     }
-
 }
