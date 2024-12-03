@@ -24,20 +24,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymousUser")) {
-            model.addAttribute("user", null);
-            return "/dashboard";
-        }
-        String email = authentication.getName();
-        User user = userService.getUserByEmail(email);
-        model.addAttribute("user", user);
-        return "/dashboard";
-    }
-
-
     @GetMapping("/register")
     @PreAuthorize("permitAll()")
     public String showRegistrationForm(Model model) {

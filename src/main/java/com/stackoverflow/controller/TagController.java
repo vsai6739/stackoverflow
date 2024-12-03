@@ -3,6 +3,7 @@ package com.stackoverflow.controller;
 import com.stackoverflow.model.Question;
 import com.stackoverflow.model.Tag;
 import com.stackoverflow.service.TagService;
+import jakarta.persistence.SecondaryTable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/tags")
@@ -40,7 +43,7 @@ public class TagController {
     @GetMapping("/{tagId}/questions")
     public String listQuestionsByTag(@PathVariable Long tagId, Model model) {
         Tag selectedTag = tagService.findTagById(tagId);
-        List<Question> questions = selectedTag.getQuestions();
+        Set<Question> questions = selectedTag.getQuestion();
         model.addAttribute("questions", questions);
         model.addAttribute("selectedTagName", selectedTag.getName());
         return "tags";

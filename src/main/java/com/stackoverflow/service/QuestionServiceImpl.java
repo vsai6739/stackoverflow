@@ -74,9 +74,13 @@ public Question createQuestion(QuestionRequestDTO questionRequestDTO) {
     question.setUser(user);
 
     Set<Tag> tags = questionRequestDTO.getTagsList().stream()
-            .map(tagName -> tagRepository.findByName(tagName).orElseGet(() -> new Tag(tagName)))
+            .filter(tagName -> tagName != null && !tagName.trim().isEmpty()) // Ensure tag name is not null or empty
+            .map(tagName -> {
+                List<Tag> foundTags = tagRepository.findByNameContainingIgnoreCase(tagName);
+                return foundTags.isEmpty() ? new Tag(tagName.trim()) : foundTags.get(0); // Trim to avoid whitespace issues
+            })
             .collect(Collectors.toSet());
-    question.setTags(tags);
+
 
     return questionRepository.save(question);
 }

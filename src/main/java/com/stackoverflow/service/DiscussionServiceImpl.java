@@ -44,8 +44,12 @@ public class DiscussionServiceImpl implements DiscussionService{
         discussion.setUser(user);
 
         Set<Tag> tags = questionRequestDTO.getTagsList().stream()
-                .map(tagName -> tagRepository.findByName(tagName).orElseGet(() -> new Tag(tagName)))
+                .map(tagName -> {
+                    List<Tag> foundTags = tagRepository.findByNameContainingIgnoreCase(tagName);
+                    return foundTags.isEmpty() ? new Tag(tagName) : foundTags.get(0);
+                })
                 .collect(Collectors.toSet());
+
 
         discussion.setDiscussionTags(tags);
 

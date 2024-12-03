@@ -200,7 +200,6 @@
             <li><a href="#">💬 Discussions</a></li>
         </ul>
     </aside>
-
     <main>
 
         <div class="text-content">
@@ -211,28 +210,12 @@
             <p>Find answers to your technical questions and help others answer theirs.</p>
         </div>
 
-
-        <!--        <div>-->
-        <!--            <h1>Welcome to the Dashboard</h1>-->
-
-        <!--            <div th:if="${user != null}">-->
-        <!--                <p>Hello, <span th:text="${user.username}">User</span>!</p>-->
-        <!--                <p>Your email: <span th:text="${user.email}"></span></p>-->
-        <!--            </div>-->
-
-        <!--            <div th:if="${user == null}">-->
-        <!--                <p>Welcome, guest! Please <a th:href="@{/users/login}">log in</a> or <a th:href="@{/users/register}">register</a> to access personalized features.</p>-->
-        <!--            </div>-->
-        <!--        </div>-->
-
-
-
         <section class="posts">
             <h2>Interesting Questions for you</h2>
             <div class="post" th:each="question:${questions}">
                 <div class="votes">
-                    <span>0 votes</span>
-                    <span>0 answers</span>
+                    <span th:text="${question.upvotes}+${question.downvotes}+' votes'"></span>
+                    <span th:text="${#lists.size(question.answers)}+' answers'"></span>
                 </div>
                 <div class="content">
                     <a th:href="@{/questions/{id}(id=${question.id})}" th:text="${question.title}">hi</a>
@@ -240,11 +223,13 @@
                     <div class="tags">
                         <span th:each="tag : ${question.tags}" th:text="${tag.name}"></span>
                     </div>
-                    <p class="author" th:text="'Asked by ' + ${question.user.username}"></p>
+                    <p class="author" th:if="${question.user != null}" th:text="'Asked by ' + ${question.user.username}"></p>
+                    <p class="author" th:if="${question.user == null}">Asked by Unknown</p>
                 </div>
             </div>
         </section>
     </main>
+
 
     <aside class="widgets">
         <button class="main-button"><a th:href="@{/questions/ask}" class="main-button">Ask Questions</a></button>

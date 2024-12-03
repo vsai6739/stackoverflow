@@ -43,6 +43,8 @@ public class QuestionController {
 
     @PostMapping("/create")
     public String createQuestion(@ModelAttribute("questionRequestDTO") QuestionRequestDTO questionRequestDTO) {
+        System.out.println("Tags List: " + questionRequestDTO.getTagsList());
+
         Question createdQuestion = questionService.createQuestion(questionRequestDTO);
         //return "redirect:/questions/home";
         return "redirect:/users/dashboard";
