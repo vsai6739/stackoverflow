@@ -42,16 +42,13 @@ public class AnswerController {
     }
 
     @PostMapping("/save/{questionId}")
-    public String saveAnswer(@PathVariable Long questionId, @ModelAttribute("answer") Answer answer, Model model) {
-        try {
+    public String saveAnswer(@PathVariable Long questionId, @RequestParam("answer") String answer) {
             Question question = questionService.getQuestionById(questionId);
-            answer.setQuestion(question);
-            answerService.createAnswer(answer);
-            return "redirect:/answers/" + questionId;
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("error", "The question you are trying to answer does not exist.");
-            return "error_page";
-        }
+            Answer answers = new Answer();
+            answers.setQuestion(question);
+            answers.setContent(answer);
+            answerService.createAnswer(answers);
+            return "redirect:/questions/" + questionId;
     }
 
     @GetMapping("/edit/{id}")
@@ -63,8 +60,8 @@ public class AnswerController {
 
     @PostMapping("/update/{id}")
     public String updateAnswer(@PathVariable Long id, @ModelAttribute("answer") Answer updatedAnswer) {
-        Answer existingAnswer = answerService.updateAnswer(id, updatedAnswer);
-        return "redirect:/answers/" + existingAnswer.getQuestion().getId();
+        answerService.updateAnswer(updatedAnswer);
+        return "redirect:/answers/" + updatedAnswer.getQuestion().getId();
     }
 
     @GetMapping("/delete/{id}")
@@ -73,5 +70,23 @@ public class AnswerController {
         Long questionId = answer.getQuestion().getId();
         answerService.deleteAnswerById(id);
         return "redirect:/answers/" + questionId;
+    }
+
+    @GetMapping("upvote/{questionId}/{id}")
+    public String updateUpvote(@PathVariable("questionId") Long questionId,@PathVariable("id") Long id ){
+        Answer answer=answerService.findAnswerById(id);
+        Integer upvote=answer.getUpvotes()+1;
+        answer.setUpvotes(upvote);
+        answerService.updateAnswer(answer);
+        return "redirect:/questions/" + questionId;
+    }
+
+    @GetMapping("downvote/{questionId}/{id}")
+    public String updateDownvote(@PathVariable("questionId") Long questionId,@PathVariable("id") Long id){
+        Answer answer=answerService.findAnswerById(id);
+        Integer downvote=answer.getDownvotes()+1;
+        answer.setDownvotes(downvote);
+        answerService.updateAnswer(answer);
+        return "redirect:/questions/" + questionId;
     }
 }

@@ -9,7 +9,7 @@ public interface QuestionService {
     Question createQuestion(QuestionRequestDTO questionRequestDTO);
     Question getQuestionById(Long id);
     List<Question> getAllQuestions();
-//    Question updateQuestion(Long id, Question question);
+    void updateQuestion(Long id, Question question);
     void deleteQuestion(Long id);
 //    List<Question> searchQuestions(String title, String tag);
 //    List<Question> filterQuestionsByStatus(String status);
