@@ -1,7 +1,7 @@
 package com.stackoverflow.repository;
 
-import com.stackoverflow.model.Replay;
+import com.stackoverflow.model.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReplayRepository extends JpaRepository<Replay,Long> {
+public interface ReplayRepository extends JpaRepository<Reply,Long> {
 }

@@ -52,8 +52,8 @@ public class QuestionServiceImpl implements QuestionService{
 
         question.setTags(tags);
 
-        Question updatedQuestion = questionRepository.save(question);
-        return updatedQuestion;
+        Question createdQuestion = questionRepository.save(question);
+        return createdQuestion;
     }
 
     @Override

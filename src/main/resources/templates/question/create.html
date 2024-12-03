@@ -144,7 +144,7 @@
     </section>
 
     <section class="question-form-section">
-        <form th:action="${(questionRequestDTO.id)== null ? '/questions/create' : '/questions/update/' + question.id}"
+        <form th:action="${(questionRequestDTO.id)== null ? '/questions/create' : '/questions/update/' + questionRequestDTO.id}"
               method="post" th:object="${questionRequestDTO}">
             <!-- Title Input -->
             <div class="input-title">

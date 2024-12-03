@@ -1,6 +1,5 @@
 package com.stackoverflow.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "replay")
 @NoArgsConstructor
-public class Replay {
+public class Reply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +31,6 @@ public class Replay {
 
     private Integer upvotes = 0;
 
-    @OneToMany(mappedBy = "replay", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reply", cascade = CascadeType.ALL)
     private List<Comment> comments;
 }
