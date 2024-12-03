@@ -183,10 +183,10 @@
 <div class="container">
     <aside>
         <ul>
-            <li><a th:href="@{/home}">🏠 Home</a></li>
+            <li><a href="@{/home}">🏠 Home</a></li>
             <li><a href="#">❓ Questions</a></li>
             <li><a href="#">🏷️ Tags</a></li>
-            <li><a th:href="@{/discussion}">💬 Discussions</a></li>
+            <li><a href="@{/discussion}">💬 Discussions</a></li>
         </ul>
     </aside>
 
@@ -200,11 +200,11 @@
             <h2>Interesting Questions for you</h2>
             <div class="post" th:each="question:${questions}">
                 <div class="votes">
-                    <span>0 votes</span>
-                    <span>0 answers</span>
+                    <span th:text="${question.upvotes}+${question.downvotes}+' votes'"></span>
+                    <span th:text="${#lists.size(question.answers)}+' answers'"></span>
                 </div>
                 <div class="content">
-                    <a href="#" th:text="${question.title}">hi</a>
+                    <a th:href="@{/questions/{id}(id=${question.id})}" th:text="${question.title}">hi</a>
                     <p th:text="${question.description}">hello</p>
                     <div class="tags">
                         <span th:each="tag : ${question.tags}" th:text="${tag.name}"></span>
@@ -216,7 +216,7 @@
     </main>
 
     <aside class="widgets">
-            <button class="main-button">Ask Questions</button>
+            <button class="main-button"><a th:href="@{/questions/ask}" class="main-button">Ask Questions</a></button>
         
         <div class="widget">
             <h3>The Overflow Blog</h3>

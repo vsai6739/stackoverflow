@@ -5,8 +5,10 @@ import com.stackoverflow.model.Answer;
 import java.util.List;
 
 public interface AnswerService {
-    public List<Answer> findAnswerByQuestionId(long questionId);
-    public void saveAnswer(Answer answer);
-    public void deleteAnswerById(long id);
-    public List<Answer> findAllAnswer();
+    List<Answer> findAnswersByQuestionId(long questionId);
+    Answer findAnswerById(long id);
+    Answer createAnswer(Answer answer);
+    void updateAnswer(Answer updatedAnswer);
+    void deleteAnswerById(long id);
+    List<Answer> findAllAnswers();
 }
