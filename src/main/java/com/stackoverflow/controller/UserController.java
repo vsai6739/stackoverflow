@@ -37,6 +37,7 @@ public class UserController {
         return "/dashboard";
     }
 
+
     @GetMapping("/register")
     @PreAuthorize("permitAll()")
     public String showRegistrationForm(Model model) {
@@ -64,17 +65,23 @@ public class UserController {
         try {
             User user = userService.login(request.getEmail(), request.getPassword());
             model.addAttribute("user", user);
-            return "redirect:/users/profile/" + user.getId();
+            return "redirect:/users/dashboard";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "user/login";
         }
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @GetMapping("/profile/{userId}")
+   @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+   @GetMapping("/profile/{userId}")
     public String getUserProfile(@PathVariable Long userId, Model model) {
-        User user = userService.getUserById(userId);
+
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       System.out.println("Authentication: " + authentication);
+       System.out.println("Authorities: " + authentication.getAuthorities());
+       System.out.println("Principal: " + authentication.getPrincipal());
+
+       User user = userService.getUserById(userId);
         model.addAttribute("user", user);
         return "user/profile";
     }
