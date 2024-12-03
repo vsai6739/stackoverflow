@@ -1,12 +1,11 @@
 package com.stackoverflow.service;
 
-import com.stackoverflow.model.Discussion;
-import com.stackoverflow.model.Replay;
+import com.stackoverflow.model.Reply;
 
 import java.util.List;
 
 public interface ReplayService {
-    Replay saveReplay(Replay replay);
-    Replay getReplayById(Long id);
-    List<Replay> getAllReplay();
+    Reply saveReplay(Reply reply);
+    Reply getReplayById(Long id);
+    List<Reply> getAllReplay();
 }

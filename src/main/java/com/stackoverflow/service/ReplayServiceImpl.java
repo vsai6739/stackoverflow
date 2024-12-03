@@ -1,6 +1,6 @@
 package com.stackoverflow.service;
 
-import com.stackoverflow.model.Replay;
+import com.stackoverflow.model.Reply;
 import com.stackoverflow.repository.ReplayRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +15,17 @@ public class ReplayServiceImpl implements ReplayService{
     }
 
     @Override
-    public Replay saveReplay(Replay replay) {
+    public Reply saveReplay(Reply replay) {
         return replayRepository.save(replay);
     }
 
     @Override
-    public Replay getReplayById(Long id) {
+    public Reply getReplayById(Long id) {
         return replayRepository.findById(id).get();
     }
 
     @Override
-    public List<Replay> getAllReplay() {
+    public List<Reply> getAllReplay() {
         return replayRepository.findAll();
     }
 }
