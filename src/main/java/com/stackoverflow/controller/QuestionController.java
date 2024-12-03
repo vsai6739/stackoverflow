@@ -3,6 +3,7 @@ package com.stackoverflow.controller;
 import com.stackoverflow.dto.AnswerRequestDTO;
 import com.stackoverflow.dto.CommentRequestDTO;
 import com.stackoverflow.dto.QuestionRequestDTO;
+import com.stackoverflow.model.Answer;
 import com.stackoverflow.model.Question;
 import com.stackoverflow.service.CommentService;
 import com.stackoverflow.service.QuestionService;
@@ -56,6 +57,24 @@ public class QuestionController {
 
         model.addAttribute("question", question);
         return "question/detail";
+    }
+
+    @GetMapping("upvote/{id}")
+    public String updateUpvote(@PathVariable("id") Long id){
+        Question question=questionService.getQuestionById(id);
+        Integer upvote=question.getUpvotes()+1;
+        question.setUpvotes(upvote);
+        questionService.updateQuestion(id,question);
+        return "redirect:/questions/" + id;
+    }
+
+    @GetMapping("downvote/{id}")
+    public String updateDownvote(@PathVariable("id") Long id){
+        Question question=questionService.getQuestionById(id);
+        Integer downvote=question.getDownvotes()+1;
+        question.setDownvotes(downvote);
+        questionService.updateQuestion(id,question);
+        return "redirect:/questions/" + id;
     }
 
 }

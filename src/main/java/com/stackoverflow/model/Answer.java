@@ -34,7 +34,7 @@ public class Answer {
     private LocalDateTime updatedAt;
 
     @Column(name= "is_accepted", nullable = false)
-    private Boolean isAccepted;
+    private Boolean isAccepted=false;
 
     private Integer upvotes = 0;
     private Integer downvotes = 0;
