@@ -48,7 +48,6 @@ public class UserController {
     @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
-        System.out.println("Username : " + user.getUsername() + "\t email : " + user.getEmail() + "\t password : " + user.getPassword());
         userService.registerUser(user.getUsername(),user.getEmail(),user.getPassword());
         return "redirect:/users/login";
     }
