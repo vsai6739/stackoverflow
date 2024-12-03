@@ -33,7 +33,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "discussion_id")
-    private Replay replay;
+    private Reply reply;
 
 
 }

@@ -1,6 +1,7 @@
 package com.stackoverflow.service;
 
 import com.stackoverflow.dto.QuestionRequestDTO;
+import com.stackoverflow.model.Answer;
 import com.stackoverflow.model.Question;
 import com.stackoverflow.model.Tag;
 import com.stackoverflow.model.User;
@@ -12,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -52,8 +54,8 @@ public class QuestionServiceImpl implements QuestionService{
 
         question.setTags(tags);
 
-        Question updatedQuestion = questionRepository.save(question);
-        return updatedQuestion;
+        Question createdQuestion = questionRepository.save(question);
+        return createdQuestion;
     }
 
     @Override
@@ -70,5 +72,11 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public void deleteQuestion(Long id) {
         questionRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateQuestion(Long id, Question question){
+        question.setUpdatedAt(LocalDateTime.now());
+        questionRepository.save(question);
     }
 }
