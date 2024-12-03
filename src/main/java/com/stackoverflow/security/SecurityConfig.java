@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableMethodSecurity // Enables @PreAuthorize annotations
+@EnableMethodSecurity
 public class SecurityConfig {
 
     UserService userService;
@@ -28,22 +28,22 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/users/register", "/users/login").permitAll()
-                        .requestMatchers("/users/**").hasAnyRole("USER", "ADMIN") // Specific to users
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Specific to admin
-                        .anyRequest().authenticated() // All remaining paths require authentication
+                        .requestMatchers("/", "/users/register", "/users/login","/users/dashboard").permitAll()
+                        .requestMatchers("/users/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
 
                 .formLogin(form -> form
                         .loginPage("/users/login")
-                        .usernameParameter("email") // Map "email" field to Spring Security's username parameter
-                        .passwordParameter("password") // This is optional; "password" is the default
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .successHandler(new CustomAuthenticationSuccessHandler(userService))
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // Custom logout endpoint
-                        .logoutSuccessUrl("/users/login?logout") // Redirect after logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/users/login?logout")
                         .permitAll()
                 );
 
@@ -52,6 +52,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // BCrypt for password hashing
+        return new BCryptPasswordEncoder();
     }
 }

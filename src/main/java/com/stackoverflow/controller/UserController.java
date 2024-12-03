@@ -25,9 +25,12 @@ public class UserController {
     }
 
     @GetMapping("/dashboard")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public String dashboard(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymousUser")) {
+            model.addAttribute("user", null);
+            return "/dashboard";
+        }
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
         model.addAttribute("user", user);
@@ -44,7 +47,6 @@ public class UserController {
     @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
-        System.out.println("Username : " + user.getUsername() + "\t email : " + user.getEmail() + "\t password : " + user.getPassword());
         userService.registerUser(user.getUsername(),user.getEmail(),user.getPassword());
         return "redirect:/users/login";
     }
