@@ -14,10 +14,12 @@ public class AnswerServiceImpl implements AnswerService {
 
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
+    private final UserService userService;
 
-    AnswerServiceImpl(AnswerRepository answerRepository, QuestionRepository questionRepository) {
+    AnswerServiceImpl(AnswerRepository answerRepository, QuestionRepository questionRepository,UserService userService) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
+        this.userService=userService;
     }
 
     @Override
@@ -37,15 +39,14 @@ public class AnswerServiceImpl implements AnswerService {
         answer.setQuestion(question);
         answer.setCreatedAt(LocalDateTime.now());
         answer.setUpdatedAt(LocalDateTime.now());
+        answer.setUser(userService.getUserById(1L));
         return answerRepository.save(answer);
     }
 
     @Override
-    public Answer updateAnswer(Long id, Answer updatedAnswer) {
-        Answer existingAnswer = findAnswerById(id);
-        existingAnswer.setContent(updatedAnswer.getContent());
-        existingAnswer.setUpdatedAt(LocalDateTime.now());
-        return answerRepository.save(existingAnswer);
+    public void updateAnswer(Answer updatedAnswer) {
+        updatedAnswer.setUpdatedAt(LocalDateTime.now());
+        answerRepository.save(updatedAnswer);
     }
 
     @Override

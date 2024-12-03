@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,25 +30,19 @@ public class Discussion {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
             name = "discussion_tag",
             joinColumns = @JoinColumn(name = "discussion_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> discussionTags;
+    private Set<Tag> discussionTags;
 
     private Integer upvotes = 0;
 
     @OneToMany(mappedBy = "discussion", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Replay> replays;
-
-
-    public void addTag(Tag tag){
-        if(discussionTags==null){
-            discussionTags=new ArrayList<>();
-        }
-        discussionTags.add(tag);
-    }
+    private List<Reply> replies;
 }

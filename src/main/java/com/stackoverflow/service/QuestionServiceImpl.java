@@ -1,6 +1,7 @@
 package com.stackoverflow.service;
 
 import com.stackoverflow.dto.QuestionRequestDTO;
+import com.stackoverflow.model.Answer;
 import com.stackoverflow.model.Question;
 import com.stackoverflow.model.Tag;
 import com.stackoverflow.model.User;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -94,5 +96,11 @@ public Question createQuestion(QuestionRequestDTO questionRequestDTO) {
     @Override
     public void deleteQuestion(Long id) {
         questionRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateQuestion(Long id, Question question){
+        question.setUpdatedAt(LocalDateTime.now());
+        questionRepository.save(question);
     }
 }

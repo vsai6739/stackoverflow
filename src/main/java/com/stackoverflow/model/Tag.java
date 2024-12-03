@@ -35,6 +35,16 @@ public class Tag {
             inverseJoinColumns = @JoinColumn(name = "question_id"))
     private Set<Question> question = new HashSet<>();
 
+    @ManyToMany(cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "discussion_tag",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "discussion_id")
+    )
+    private Set<Discussion> discussion = new HashSet<>();
+
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -46,6 +56,5 @@ public class Tag {
 
 
     @ManyToMany(mappedBy = "discussionTags")
-    @JsonIgnore
     private List<Discussion> discussions;
 }
