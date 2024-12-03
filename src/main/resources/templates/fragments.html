@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fragments</title>
+</head>
+<link rel="stylesheet" href="/css/home.css">
+<body>
+<div th:fragment="header">
+    <header>
+        <div class="header-left">
+            <nav>
+                <h1>Stack Overflow</h1>
+            </nav>
+        </div>
+        <input type="text" placeholder="Search..." class="search-bar">
+        <div class="header-right">
+            <div class="icons">
+                <span>🔔<strong>Notifications</strong></span>
+                <span>👤<strong>User</strong></span>
+            </div>
+        </div>
+    </header>
+</div>
+<div th:fragment="side">
+    <aside>
+        <ul>
+            <li><a th:href="@{/home}">🏠 Home</a></li>
+            <li><a href="#">❓ Questions</a></li>
+            <li><a href="#">🏷️ Tags</a></li>
+            <li><a th:href="@{/discussion}">💬 Discussions</a></li>
+        </ul>
+    </aside>
+</div>
+
+<div th:fragment="footer">
+    <footer>
+        <p>&copy; 2024 Stack Overflow. All rights reserved.</p>
+    </footer>
+</div>
+</body>
+</html>
