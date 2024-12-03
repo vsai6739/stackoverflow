@@ -172,13 +172,22 @@
         </nav>
     </div>
     <input type="text" placeholder="Search..." class="search-bar">
-    <div class="header-right">
-        <div class="icons">
-            <span>🔔<strong>Notifications</strong></span>
-            <a th:href="@{/users/profile/{userId}(userId=${user.id})}" style="text-decoration: none; color: inherit;">
-            <span>👤<strong>User</strong></span>
-            </a>
-        </div>
+
+    <div class="icons">
+        <span>🔔<strong>Notifications</strong></span>
+        <span th:if="${user != null}">
+                <a th:href="@{/users/profile/{userId}(userId=${user.id})}" style="text-decoration: none; color: inherit;">
+                    👤<strong th:text="${user.username}">User</strong>
+                </a>
+            </span>
+        <span th:if="${user == null}">
+                <a th:href="@{/users/login}" style="text-decoration: none; color: inherit;">
+                    👤<strong>Login</strong>
+                </a>
+             <a th:href="@{/users/register}" style="text-decoration: none; color: inherit;">
+                    ✍️<strong>Signup</strong>
+                </a>
+            </span>
     </div>
 </header>
 
@@ -198,6 +207,23 @@
             <h1>Welcome to Stack Overflow, [User's Name]!</h1>
             <p>Find answers to your technical questions and help others answer theirs.</p>
         </div>
+
+
+<!--        <div>-->
+<!--            <h1>Welcome to the Dashboard</h1>-->
+
+<!--            <div th:if="${user != null}">-->
+<!--                <p>Hello, <span th:text="${user.username}">User</span>!</p>-->
+<!--                <p>Your email: <span th:text="${user.email}"></span></p>-->
+<!--            </div>-->
+
+<!--            <div th:if="${user == null}">-->
+<!--                <p>Welcome, guest! Please <a th:href="@{/users/login}">log in</a> or <a th:href="@{/users/register}">register</a> to access personalized features.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+
         <section class="posts">
             <h2>Interesting Questions for you</h2>
             <div class="post" th:each="question:${questions}">
